@@ -36,8 +36,6 @@ func main() {
 	signal.Notify(
 		signalChan,
 		syscall.SIGHUP,
-		syscall.SIGINT,
-		syscall.SIGTERM,
 		syscall.SIGQUIT,
 		syscall.SIGWINCH,
 	)
@@ -51,14 +49,6 @@ func main() {
 			switch s {
 			// kill -SIGHUP XXXX
 			case syscall.SIGHUP:
-				exitChan <- 0
-
-			// kill -SIGINT XXXX or Ctrl+c
-			case syscall.SIGINT:
-				exitChan <- 0
-
-			// kill -SIGTERM XXXX
-			case syscall.SIGTERM:
 				exitChan <- 0
 
 			// kill -SIGQUIT XXXX
