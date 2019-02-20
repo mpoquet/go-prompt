@@ -47,7 +47,7 @@ func (p *Prompt) Run() {
 	}
 
 	p.setUp()
-	defer p.tearDown()
+	defer p.TearDown()
 
 	p.renderer.Render(p.buf, p.completion)
 
@@ -92,7 +92,7 @@ func (p *Prompt) Run() {
 			p.renderer.Render(p.buf, p.completion)
 		case code := <-exitCh:
 			p.renderer.BreakLine(p.buf)
-			p.tearDown()
+			p.TearDown()
 			os.Exit(code)
 		default:
 			time.Sleep(10 * time.Millisecond)
@@ -217,7 +217,7 @@ func (p *Prompt) Input() string {
 	}
 
 	p.setUp()
-	defer p.tearDown()
+	defer p.TearDown()
 
 	p.renderer.Render(p.buf, p.completion)
 	bufCh := make(chan []byte, 128)
@@ -266,7 +266,7 @@ func (p *Prompt) setUp() {
 	p.renderer.UpdateWinSize(p.in.GetWinSize())
 }
 
-func (p *Prompt) tearDown() {
+func (p *Prompt) TearDown() {
 	p.in.TearDown()
 	p.renderer.TearDown()
 }
